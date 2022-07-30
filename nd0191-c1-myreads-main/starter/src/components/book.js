@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 function Book({_book}) {
     return (  
-        <li>
+        <li key={_book.bookName}>
             <div className="book">
             <div className="book-top">
                 <div
@@ -29,7 +29,9 @@ function Book({_book}) {
                 </div>
             </div>
                 <div className="book-title">{_book.bookName}</div>
-                <div className="book-authors">{_book.bookAuthors}</div>
+                <div className="book-authors">{_book.bookAuthors.map((author) => {
+                    return <div>{author}</div> 
+                })}</div>
             </div>
         </li>
     );
