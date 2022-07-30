@@ -19,10 +19,6 @@ function App() {
             name: "Read",
             books: []
         },
-        {
-            name: "None",
-            books: []
-        },
     ]);
     
 
@@ -67,7 +63,7 @@ function App() {
             handleBookResponse(response);
         }
 
-        getAllBooksInShelves()
+        getAllBooksInShelves();
         
     }, []);
     
