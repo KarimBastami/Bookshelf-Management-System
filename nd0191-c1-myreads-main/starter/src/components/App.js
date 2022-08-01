@@ -28,9 +28,7 @@ function App() {
     }
 
 
-    const addBookToShelf = (book, shelfName) => {
-
-        shelfName = convertToLowerandRemoveSpaces(shelfName);
+    const getShelfObjects = (shelfName) => {
 
         let selectedShelf = shelves.filter((s) => {
             return convertToLowerandRemoveSpaces(s.name) === shelfName;
@@ -39,6 +37,17 @@ function App() {
         let allShelvesNotSelected = shelves.filter((s) => {
             return convertToLowerandRemoveSpaces(s.name) !== shelfName;
         });
+
+        return {selectedShelf: selectedShelf,
+                allShelvesNotSelected: allShelvesNotSelected};
+    }
+
+
+    const addBookToShelf = (book, shelfName) => {
+
+        shelfName = convertToLowerandRemoveSpaces(shelfName);
+
+        let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
         
         selectedShelf[0].books.push(book);
 
@@ -47,7 +56,12 @@ function App() {
     }
 
 
-    const handleBookResponse = (res) => {
+    const removeBookFromShelf = (book, shelfName) => {
+        
+    }
+
+
+    const handleGetBookResponse = (res) => {
         res.map((bookDetails) => {
 
             const currentShelf = bookDetails.shelf;
@@ -66,7 +80,7 @@ function App() {
     useEffect(() => {
         const getAllBooksInShelves = async () => {
             const response = await BooksAPI.getAll();
-            handleBookResponse(response);
+            handleGetBookResponse(response);
         }
 
         getAllBooksInShelves();
