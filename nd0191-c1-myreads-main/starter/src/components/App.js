@@ -22,16 +22,22 @@ function App() {
     ]);
     
 
+
+    const convertToLowerandRemoveSpaces = (str) => {
+        return str.toLowerCase().replaceAll(" ", "");
+    }
+
+
     const addBookToShelf = (book, shelfName) => {
 
-        shelfName = shelfName.toLowerCase().replaceAll(" ", "");
+        shelfName = convertToLowerandRemoveSpaces(shelfName);
 
         let selectedShelf = shelves.filter((s) => {
-            return s.name.toLowerCase().replaceAll(" ", "") === shelfName;
+            return convertToLowerandRemoveSpaces(s.name) === shelfName;
         });
 
         let allShelvesNotSelected = shelves.filter((s) => {
-            return s.name.toLowerCase().replaceAll(" ", "") !== shelfName;
+            return convertToLowerandRemoveSpaces(s.name) !== shelfName;
         });
         
         selectedShelf[0].books.push(book);
