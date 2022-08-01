@@ -56,8 +56,16 @@ function App() {
     }
 
 
-    const removeBookFromShelf = (book, shelfName) => {
-        
+    const removeBookFromShelf = (bookName, name) => {
+
+        const shelfName = convertToLowerandRemoveSpaces(name);
+
+        let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
+
+        selectedShelf.books = selectedShelf[0].books.filter(b => bookName === b.name);
+
+        const finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
+        setShelves(finalShelvesList);
     }
 
 
@@ -83,8 +91,7 @@ function App() {
             handleGetBookResponse(response);
         }
 
-        getAllBooksInShelves();
-        
+        getAllBooksInShelves();     
     }, []);
     
 
