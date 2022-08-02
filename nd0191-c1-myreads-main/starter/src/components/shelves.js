@@ -7,7 +7,8 @@ function Shelves({_shelfList}) {
     return (
         <div className="list-books-content">
             {_shelfList.map((shelf) => {
-               return <Shelf _shelf={shelf}/>
+               return <Shelf key={shelf.name} 
+                             _shelf={shelf}/>
             })}
         </div>
     );

@@ -12,7 +12,7 @@ function Shelf({_shelf}) {
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {shelfBooksList.map((shelfBook) => {
-                       return <Book key={shelfBook.name} 
+                       return <Book key={shelfBook.bookName} 
                                     _book={shelfBook}/>
                     })}
                 </ol>

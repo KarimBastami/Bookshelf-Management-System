@@ -30,7 +30,7 @@ function App() {
 
     const getShelfObjects = (shelfName) => {
 
-        // shelfName = convertToLowerandRemoveSpaces(shelfName);
+        shelfName = convertToLowerandRemoveSpaces(shelfName);
 
         let selectedShelf = shelves.filter((s) => {
             return convertToLowerandRemoveSpaces(s.name) === shelfName;
