@@ -30,6 +30,8 @@ function App() {
 
     const getShelfObjects = (shelfName) => {
 
+        // shelfName = convertToLowerandRemoveSpaces(shelfName);
+
         let selectedShelf = shelves.filter((s) => {
             return convertToLowerandRemoveSpaces(s.name) === shelfName;
         });
@@ -45,24 +47,24 @@ function App() {
 
     const addBookToShelf = (book, shelfName) => {
 
-        shelfName = convertToLowerandRemoveSpaces(shelfName);
-
         let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
         
-        selectedShelf[0].books.push(book);
+        if (selectedShelf.length !== 0) {
+            selectedShelf[0].books.push(book);
+        }
 
         const finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
         setShelves(finalShelvesList);
     }
 
 
-    const removeBookFromShelf = (bookName, name) => {
-
-        const shelfName = convertToLowerandRemoveSpaces(name);
+    const removeBookFromShelf = (bookName, shelfName) => {
 
         let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
 
-        selectedShelf.books = selectedShelf[0].books.filter(b => bookName === b.name);
+        if (selectedShelf.length !== 0) {
+            selectedShelf[0].books = selectedShelf[0].books.filter(b => bookName === b.bookName);
+        }
 
         const finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
         setShelves(finalShelvesList);
@@ -70,18 +72,20 @@ function App() {
 
 
     const handleGetBookResponse = (res) => {
-        res.map((bookDetails) => {
-
-            const currentShelf = bookDetails.shelf;
-
-            const bookObject = {
-                bookName: bookDetails.title,
-                bookAuthors: bookDetails.authors,
-                bookPictureURL: bookDetails.imageLinks.thumbnail
-            };
-
-           return addBookToShelf(bookObject, currentShelf);
-        })
+        if (res) {
+            res.map((bookDetails) => {
+    
+                const currentShelf = bookDetails.shelf;
+    
+                const bookObject = {
+                    bookName: bookDetails.title,
+                    bookAuthors: bookDetails.authors,
+                    bookPictureURL: bookDetails.imageLinks.thumbnail
+                };
+    
+               return addBookToShelf(bookObject, currentShelf);
+            })
+        }
     }
 
 
