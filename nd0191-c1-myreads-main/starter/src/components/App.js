@@ -6,17 +6,18 @@ import Shelves from "./shelves";
 
 function App() {
 
+    const shelfTitles = ["Currently Reading", "Want to Read", "Read"]
     const [shelves, setShelves] = useState([
         {
-            name: "Currently Reading",
+            name: shelfTitles[0],
             books: []
         },
         {
-            name: "Want to Read",
+            name: shelfTitles[1],
             books: []
         },
         {
-            name: "Read",
+            name: shelfTitles[2],
             books: []
         },
     ]);
@@ -54,6 +55,7 @@ function App() {
         }
 
         const finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
+        
         setShelves(finalShelvesList);
     }
 
@@ -63,10 +65,16 @@ function App() {
         let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
 
         if (selectedShelf.length !== 0) {
-            selectedShelf[0].books = selectedShelf[0].books.filter(b => bookName === b.bookName);
+            selectedShelf[0].books = selectedShelf[0].books.filter(b => bookName !== b.bookName);
         }
 
-        const finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
+        let finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
+
+        const sShelfIndex = shelfTitles.indexOf(shelfName);
+        const sShelf = finalShelvesList.splice(2, 1)[0];
+
+        finalShelvesList.splice(sShelfIndex, 0, sShelf);
+
         setShelves(finalShelvesList);
     }
 
@@ -104,7 +112,7 @@ function App() {
             <div className="list-books-title">
                 <h1>MyReads</h1>
             </div>
-
+            <button onClick={() => removeBookFromShelf("The Linux Command Line", "Currently Reading")} >hehe</button>
             <Shelves _shelfList={shelves}/>
         </div>
     );
