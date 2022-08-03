@@ -55,7 +55,9 @@ function App() {
             selectedShelf[0].books.push(book);
         }
 
-        const finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
+        let finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
+
+        finalShelvesList = fitShelvesOrder(finalShelvesList);
 
         setShelves(finalShelvesList);
     }
@@ -71,12 +73,23 @@ function App() {
 
         let finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
 
-        const sShelfIndex = shelfTitles.indexOf(shelfName);
-        const sShelf = finalShelvesList.splice(2, 1)[0];
-
-        finalShelvesList.splice(sShelfIndex, 0, sShelf);
+        finalShelvesList = fitShelvesOrder(finalShelvesList);
 
         setShelves(finalShelvesList);
+    }
+
+
+    const fitShelvesOrder = (allShelves) => {
+
+        let finalShelves = [];
+
+        shelfTitles.forEach((title) => {
+            allShelves.forEach((shelf) => {
+                shelf.name === title && finalShelves.push(shelf);
+            })
+        })
+    
+        return finalShelves;
     }
 
 
@@ -104,7 +117,7 @@ function App() {
         const uiShelfName = shelfName.uiShelfName;
 
         removeBookFromShelf(book, uiShelfName);
-        // addBookToShelf(book, uiShelfName);
+        addBookToShelf(book, uiShelfName);
     }
 
 
