@@ -1,8 +1,11 @@
 import "../css/App.css";
-import { useState, useEffect } from "react";
+
+import {useState, useEffect} from "react";
+import {Link, Route, Routes} from "react-router-dom";
 
 import * as BooksAPI from "../utils/BooksAPI";
 import Shelves from "./shelves"; 
+import SearchBooks from "./searchbooks";
 
 function App() {
 
@@ -131,21 +134,32 @@ function App() {
             handleGetBookResponse(response);
         }
 
-        getAllBooksInShelves(); 
+        getAllBooksInShelves();
 
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
 
     return (
-        <div className="app">
-            <div className="list-books-title">
-                <h1>MyReads</h1>
-            </div>
+        <Routes>
+            <Route exact path="/" 
+                   element={
+                            <div className="app">
+                                <div className="list-books-title">
+                                    <h1>MyReads</h1>
+                                </div>
 
-            <Shelves _shelfList={shelves}
-                     _onMoveBookToShelf={moveBookToShelf}/>
-        </div>
+                                <Shelves _shelfList={shelves}
+                                        _onMoveBookToShelf={moveBookToShelf}/>
+
+                                <Link to={"/search"} className="open-search">
+                                    <a></a>
+                                </Link>
+                            </div>
+                        } />
+            
+            <Route exact path="/search" element={<SearchBooks />}/>
+        </Routes>
     );
 }
 
