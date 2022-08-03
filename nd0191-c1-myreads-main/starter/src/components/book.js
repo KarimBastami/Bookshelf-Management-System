@@ -1,6 +1,39 @@
 import PropTypes from "prop-types";
+import {useState} from "react"
 
-function Book({_book}) {
+function Book({_book, _shelfName, _onMoveBookToShelf}) {
+
+    let defaultShelf = "";
+
+    switch (_shelfName) {
+        case "Currently Reading":
+            defaultShelf = "currentlyReading";
+            break;
+
+        case "Want to Read":
+            defaultShelf = "wantToRead";
+            break;
+
+        case "Read":
+            defaultShelf = "read";
+            break;
+
+        default:
+            defaultShelf = "none";
+            break;
+    }
+
+    const [selectedShelf, setSelectedShelf] = useState(defaultShelf);
+
+    const handleSelectChange = (e) => {
+        const selectedShelfForAPI = e.target.value;
+        
+        setSelectedShelf(selectedShelfForAPI);
+        _onMoveBookToShelf(_book, {apiShelfName: selectedShelfForAPI,
+                                   uiShelfName: _shelfName})
+    }
+
+
     return (  
         <li>
             <div className="book">
@@ -15,8 +48,8 @@ function Book({_book}) {
                 }}
                 ></div>
                 <div className="book-shelf-changer">
-                    <select>
-                        <option value="none" disabled>
+                    <select value={selectedShelf} onChange={handleSelectChange}>
+                        <option disabled>
                         Move to...
                         </option>
                         <option value="currentlyReading">
@@ -39,7 +72,9 @@ function Book({_book}) {
 
 
 Book.propTypes = {
-    _book: PropTypes.object.isRequired
+    _book: PropTypes.object.isRequired,
+    _shelfName: PropTypes.string.isRequired,
+    _onMoveBookToShelf: PropTypes.func.isRequired
 };
 
 export default Book;

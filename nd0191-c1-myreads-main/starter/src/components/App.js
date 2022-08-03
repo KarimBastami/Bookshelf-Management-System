@@ -7,6 +7,7 @@ import Shelves from "./shelves";
 function App() {
 
     const shelfTitles = ["Currently Reading", "Want to Read", "Read"]
+
     const [shelves, setShelves] = useState([
         {
             name: shelfTitles[0],
@@ -55,17 +56,17 @@ function App() {
         }
 
         const finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
-        
+
         setShelves(finalShelvesList);
     }
 
 
-    const removeBookFromShelf = (bookName, shelfName) => {
+    const removeBookFromShelf = (book, shelfName) => {
 
         let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
 
         if (selectedShelf.length !== 0) {
-            selectedShelf[0].books = selectedShelf[0].books.filter(b => bookName !== b.bookName);
+            selectedShelf[0].books = selectedShelf[0].books.filter(b => book.bookName !== b.bookName);
         }
 
         let finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
@@ -85,15 +86,25 @@ function App() {
     
                 const currentShelf = bookDetails.shelf;
     
-                const bookObject = {
+                const bookObj = {
+                    id: bookDetails.id,
                     bookName: bookDetails.title,
                     bookAuthors: bookDetails.authors,
                     bookPictureURL: bookDetails.imageLinks.thumbnail
                 };
     
-               return addBookToShelf(bookObject, currentShelf);
+               return addBookToShelf(bookObj, currentShelf);
             })
         }
+    }
+
+
+    const moveBookToShelf = (book, shelfName) => {
+        const apiShelfName = shelfName.apiShelfName;
+        const uiShelfName = shelfName.uiShelfName;
+
+        removeBookFromShelf(book, uiShelfName);
+        // addBookToShelf(book, uiShelfName);
     }
 
 
@@ -103,7 +114,8 @@ function App() {
             handleGetBookResponse(response);
         }
 
-        getAllBooksInShelves();     
+        getAllBooksInShelves(); 
+
     }, []);
     
 
@@ -112,8 +124,9 @@ function App() {
             <div className="list-books-title">
                 <h1>MyReads</h1>
             </div>
-            <button onClick={() => removeBookFromShelf("The Linux Command Line", "Currently Reading")} >hehe</button>
-            <Shelves _shelfList={shelves}/>
+
+            <Shelves _shelfList={shelves}
+                     _onMoveBookToShelf={moveBookToShelf}/>
         </div>
     );
 }

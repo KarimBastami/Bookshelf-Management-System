@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import Book from "./book";
 
-function Shelf({_shelf}) {
+function Shelf({_shelf, _onMoveBookToShelf}) {
 
     const shelfBooksList = _shelf.books;
     
@@ -12,8 +12,10 @@ function Shelf({_shelf}) {
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {shelfBooksList.map((shelfBook) => {
-                       return <Book key={shelfBook.bookName} 
-                                    _book={shelfBook}/>
+                       return <Book key={shelfBook.id} 
+                                    _book={shelfBook}
+                                    _shelfName={_shelf.name}
+                                    _onMoveBookToShelf={_onMoveBookToShelf} />
                     })}
                 </ol>
             </div>
@@ -23,7 +25,8 @@ function Shelf({_shelf}) {
 
 
 Shelf.propTypes = {
-    _shelf: PropTypes.object.isRequired
+    _shelf: PropTypes.object.isRequired,
+    _onMoveBookToShelf: PropTypes.func.isRequired
 };
 
 export default Shelf;
