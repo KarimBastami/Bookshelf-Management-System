@@ -47,7 +47,7 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
                 break;
             
             default:
-                uiMoveToShelfName = "none"
+                uiMoveToShelfName = "none";
                 break;
         }
 
