@@ -113,11 +113,15 @@ function App() {
 
 
     const moveBookToShelf = (book, shelfName) => {
-        const apiShelfName = shelfName.apiShelfName;
-        const uiShelfName = shelfName.uiShelfName;
+        
+        const {apiMoveToShelfName, 
+               uiMoveFromShelfName, 
+               uiMoveToShelfName} = shelfName;
+        
+        removeBookFromShelf(book, uiMoveFromShelfName);
+        addBookToShelf(book, uiMoveToShelfName);
 
-        removeBookFromShelf(book, uiShelfName);
-        addBookToShelf(book, uiShelfName);
+        BooksAPI.update({id: book.id}, apiMoveToShelfName);
     }
 
 
@@ -129,6 +133,7 @@ function App() {
 
         getAllBooksInShelves(); 
 
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
 

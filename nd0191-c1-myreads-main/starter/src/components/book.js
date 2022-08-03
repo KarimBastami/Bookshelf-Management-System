@@ -25,12 +25,42 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
 
     const [selectedShelf, setSelectedShelf] = useState(defaultShelf);
 
+
     const handleSelectChange = (e) => {
-        const selectedShelfForAPI = e.target.value;
+
+        const apiMoveToShelfName = e.target.value;
+        const uiMoveFromShelfName = _shelfName;
+        let uiMoveToShelfName = "";
+
+
+        switch (apiMoveToShelfName) {
+            case "currentlyReading":
+                uiMoveToShelfName = "Currently Reading";
+                break;
+            
+            case "wantToRead":
+                uiMoveToShelfName = "Want to Read";
+                break;
+
+            case "read":
+                uiMoveToShelfName = "Read";
+                break;
+            
+            default:
+                uiMoveToShelfName = "none"
+                break;
+        }
+
+
+        const shelfNames = {
+            apiMoveToShelfName: apiMoveToShelfName,
+            uiMoveFromShelfName: uiMoveFromShelfName,
+            uiMoveToShelfName: uiMoveToShelfName
+        }
+
         
-        setSelectedShelf(selectedShelfForAPI);
-        _onMoveBookToShelf(_book, {apiShelfName: selectedShelfForAPI,
-                                   uiShelfName: _shelfName})
+        setSelectedShelf(apiMoveToShelfName);
+        _onMoveBookToShelf(_book, shelfNames);
     }
 
 
