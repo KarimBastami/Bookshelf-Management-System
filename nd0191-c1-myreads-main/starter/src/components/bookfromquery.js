@@ -3,6 +3,13 @@ import PropTypes from "prop-types";
 
 
 function BookFromQuery({_book}) {
+
+    let bookURL = "";
+
+    if (_book.hasOwnProperty("imageLinks")) {
+        bookURL = _book.imageLinks.thumbnail;
+    }  
+
     return (  
         <li>
             <div className="book">
@@ -13,7 +20,7 @@ function BookFromQuery({_book}) {
                         width: 128,
                         height: 193,
                         backgroundImage:
-                        `url(${_book.imageLinks.thumbnail})`,
+                        `url(${bookURL})`,
                     }}
                     ></div>
                     <div className="book-shelf-changer">
@@ -26,15 +33,16 @@ function BookFromQuery({_book}) {
                             </option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>
-                            <option value="none">None</option>
                         </select>
                     </div>
                 </div>
 
                 <div className="book-title">{_book.title}</div>
                 <div className="book-authors">
-                    {_book.authors.map((author) => {
-                        return <div key={author} >{author}</div> 
+                    {
+                        _book.hasOwnProperty("authors") &&
+                        _book.authors.map((author) => {
+                            return <div key={author} >{author}</div> 
                     })}
                 </div>
             </div>
