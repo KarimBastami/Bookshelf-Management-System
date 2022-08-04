@@ -1,8 +1,39 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from "prop-types";
+import {useState} from "react";
 
+function BookFromQuery({_book, _addBook}) {
 
-function BookFromQuery({_book}) {
+    let defaultShelf = "none";
+
+    const [selectedShelf, setSelectedShelf] = useState(defaultShelf);
+    
+    const handleSelectChange = (e) => {
+        let uiMoveToShelfName = "";
+        const selectedValue = e.target.value;
+        setSelectedShelf(selectedValue);
+        
+
+        switch (selectedValue) {
+            case "currentlyReading":
+                uiMoveToShelfName = "Currently Reading";
+                break;
+            
+            case "wantToRead":
+                uiMoveToShelfName = "Want to Read";
+                break;
+
+            case "read":
+                uiMoveToShelfName = "Read";
+                break;
+            
+            default:
+                uiMoveToShelfName = "none";
+                break;
+        }
+
+        _addBook(_book, uiMoveToShelfName);
+    }
 
     let bookURL = "";
 
@@ -24,8 +55,8 @@ function BookFromQuery({_book}) {
                     }}
                     ></div>
                     <div className="book-shelf-changer">
-                        <select>
-                            <option disabled>
+                        <select value={selectedShelf} onChange={handleSelectChange}>
+                            <option value={"none"} disabled>
                             Move to...
                             </option>
                             <option value="currentlyReading">

@@ -64,6 +64,12 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
     }
 
 
+    let bookURL = "";
+
+    if (_book.hasOwnProperty("imageLinks")) {
+        bookURL = _book.imageLinks.thumbnail;
+    }  
+
     return (  
         <li>
             <div className="book">
@@ -74,7 +80,7 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
                         width: 128,
                         height: 193,
                         backgroundImage:
-                        `url(${_book.bookPictureURL})`,
+                        `url(${bookURL})`,
                     }}
                     ></div>
                     <div className="book-shelf-changer">
@@ -94,7 +100,7 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
 
                 <div className="book-title">{_book.bookName}</div>
                 <div className="book-authors">
-                    {_book.bookAuthors.map((author) => {
+                    {_book.authors.map((author) => {
                         return <div key={author} >{author}</div> 
                     })}
                 </div>

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import * as BooksAPI from "../utils/BooksAPI";
 import BookFromQuery from './bookfromquery';
 
-function SearchBooks() {
+function SearchBooks({_addBook}) {
 
     const [query, setQuery] = useState("");
     const [searchBooks, setSearchBooks] = useState([]);
@@ -19,7 +19,7 @@ function SearchBooks() {
         const searchForBooks = async () => {
             if (query) {
                 const response = await BooksAPI.search(query);
-                console.log(response);
+                
                 if (response.length !== undefined) {
                     setSearchBooks(response);
                 } else {
@@ -51,7 +51,8 @@ function SearchBooks() {
                     <ol className="books-grid">
                         {searchBooks.map((book) => {
                             return <BookFromQuery key={book.id} 
-                                                  _book={book}/>
+                                                  _book={book}
+                                                  _addBook={_addBook}/>
                         })}
                     </ol>
                 </div>

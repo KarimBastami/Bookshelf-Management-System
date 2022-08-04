@@ -71,7 +71,7 @@ function App() {
         let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
 
         if (selectedShelf.length !== 0) {
-            selectedShelf[0].books = selectedShelf[0].books.filter(b => book.bookName !== b.bookName);
+            selectedShelf[0].books = selectedShelf[0].books.filter(b => book.title !== b.title);
         }
 
         let finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
@@ -99,17 +99,7 @@ function App() {
     const handleGetBookResponse = (res) => {
         if (res) {
             res.map((bookDetails) => {
-    
-                const currentShelf = bookDetails.shelf;
-    
-                const bookObj = {
-                    id: bookDetails.id,
-                    bookName: bookDetails.title,
-                    bookAuthors: bookDetails.authors,
-                    bookPictureURL: bookDetails.imageLinks.thumbnail
-                };
-    
-               return addBookToShelf(bookObj, currentShelf);
+               return addBookToShelf(bookDetails, bookDetails.shelf);
             })
         }
     }
@@ -158,7 +148,7 @@ function App() {
                             </div>
                         } />
             
-            <Route exact path="/search" element={<SearchBooks />}/>
+            <Route exact path="/search" element={<SearchBooks _addBook={addBookToShelf}/>}/>
         </Routes>
     );
 }
