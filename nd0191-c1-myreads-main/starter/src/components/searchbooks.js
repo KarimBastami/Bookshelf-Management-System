@@ -3,11 +3,38 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import * as BooksAPI from "../utils/BooksAPI";
+import BookFromQuery from './bookfromquery';
+
 function SearchBooks() {
 
     const [query, setQuery] = useState("");
+    const [searchBooks, setSearchBooks] = useState([]);
 
     const handleInputChange = e => setQuery(e.target.value);
+
+
+    useEffect(() => {
+
+        const searchForBooks = async () => {
+            if (query) {
+                const response = await BooksAPI.search(query);
+                console.log(response);
+                if (response.length !== undefined) {
+                    setSearchBooks(response);
+                } else {
+                    setSearchBooks([]);
+                }
+
+            } else {
+                setSearchBooks([]);
+            }
+        }
+
+        searchForBooks();
+
+    }, [query])
+
 
     return (
             <div className="search-books">
@@ -22,7 +49,10 @@ function SearchBooks() {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        
+                        {searchBooks.map((book) => {
+                            return <BookFromQuery key={book.id} 
+                                                  _book={book}/>
+                        })}
                     </ol>
                 </div>
             </div>
