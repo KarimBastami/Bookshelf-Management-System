@@ -153,7 +153,7 @@ function App() {
                                         _onMoveBookToShelf={moveBookToShelf}/>
 
                                 <Link to={"/search"} className="open-search">
-                                    <a></a>
+                                    <button></button>
                                 </Link>
                             </div>
                         } />
