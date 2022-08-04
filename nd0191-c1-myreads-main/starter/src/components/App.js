@@ -107,14 +107,13 @@ function App() {
 
     const moveBookToShelf = (book, shelfName) => {
         
-        const {apiMoveToShelfName, 
-               uiMoveFromShelfName, 
-               uiMoveToShelfName} = shelfName;
+        const {moveToShelfName, 
+               moveFromShelfName} = shelfName;
         
-        removeBookFromShelf(book, uiMoveFromShelfName);
-        addBookToShelf(book, uiMoveToShelfName);
+        removeBookFromShelf(book, moveFromShelfName);
+        addBookToShelf(book, moveToShelfName);
 
-        BooksAPI.update({id: book.id}, apiMoveToShelfName);
+        BooksAPI.update({id: book.id}, moveToShelfName);
     }
 
 

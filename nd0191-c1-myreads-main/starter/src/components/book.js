@@ -28,38 +28,15 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
 
     const handleSelectChange = (e) => {
 
-        const apiMoveToShelfName = e.target.value;
-        const uiMoveFromShelfName = _shelfName;
-        let uiMoveToShelfName = "";
-
-
-        switch (apiMoveToShelfName) {
-            case "currentlyReading":
-                uiMoveToShelfName = "Currently Reading";
-                break;
-            
-            case "wantToRead":
-                uiMoveToShelfName = "Want to Read";
-                break;
-
-            case "read":
-                uiMoveToShelfName = "Read";
-                break;
-            
-            default:
-                uiMoveToShelfName = "none";
-                break;
-        }
-
+        const moveToShelfName = e.target.value;
+        const moveFromShelfName = _shelfName;
 
         const shelfNames = {
-            apiMoveToShelfName: apiMoveToShelfName,
-            uiMoveFromShelfName: uiMoveFromShelfName,
-            uiMoveToShelfName: uiMoveToShelfName
+            moveToShelfName: moveToShelfName,
+            moveFromShelfName: moveFromShelfName,
         }
-
-        
-        setSelectedShelf(apiMoveToShelfName);
+    
+        setSelectedShelf(moveToShelfName);
         _onMoveBookToShelf(_book, shelfNames);
     }
 
