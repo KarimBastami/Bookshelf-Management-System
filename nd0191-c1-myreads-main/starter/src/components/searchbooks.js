@@ -9,7 +9,7 @@ import * as BooksAPI from "../utils/BooksAPI";
 import BookFromQuery from './bookfromquery';
 
 
-function SearchBooks({_addBook, _getCommonBooks, _shelves}) {
+function SearchBooks({_addBook, _getCommonBooks, _shelves, _onMoveBookToShelf}) {
 
     const [query, setQuery] = useState("");
     const [searchBooks, setSearchBooks] = useState([]);
@@ -63,7 +63,8 @@ function SearchBooks({_addBook, _getCommonBooks, _shelves}) {
                             return <BookFromQuery key={book.id} 
                                                   _book={book}
                                                   _addBook={_addBook}
-                                                  _commonBooks={commonBooks}/>
+                                                  _commonBooks={commonBooks}
+                                                  _onMoveBookToShelf={_onMoveBookToShelf}/>
                         })}
                     </ol>
                 </div>
@@ -74,7 +75,8 @@ function SearchBooks({_addBook, _getCommonBooks, _shelves}) {
 
 SearchBooks.propTypes = {
     _addBook: PropTypes.func.isRequired,
-    _getCommonBooks: PropTypes.func.isRequired
+    _getCommonBooks: PropTypes.func.isRequired,
+    _shelves: PropTypes.array.isRequired
 }
 
 export default SearchBooks;

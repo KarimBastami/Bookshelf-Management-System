@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {useState, useEffect} from "react";
 
-function BookFromQuery({_book, _addBook, _commonBooks}) {
+function BookFromQuery({_book, _addBook, _commonBooks, _onMoveBookToShelf}) {
 
     let bookURL = "";
 
@@ -10,10 +10,17 @@ function BookFromQuery({_book, _addBook, _commonBooks}) {
     
     const handleSelectChange = (e) => {
         const selectedValue = e.target.value;
-        _book.shelf = selectedValue;
-
         setSelectedShelf(selectedValue);
-        _addBook(_book, selectedValue);
+         
+        const commonBookArr = _commonBooks.filter(b => b.id === _book.id);
+        
+        if (commonBookArr.length !== 0) {
+            _onMoveBookToShelf(_book, {moveToShelfName: selectedValue,
+                                       moveFromShelfName: commonBookArr[0].shelf})
+        } else {
+            _book.shelf = selectedValue;
+            _addBook(_book, selectedValue);
+        }
     }
 
     if (_book.hasOwnProperty("imageLinks")) {
@@ -29,7 +36,6 @@ function BookFromQuery({_book, _addBook, _commonBooks}) {
         setSelectedShelf(defaultShelf);
         
     }, [_commonBooks, _book])
-
 
     
     return (  

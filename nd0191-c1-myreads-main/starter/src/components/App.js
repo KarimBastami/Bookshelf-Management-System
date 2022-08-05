@@ -72,7 +72,7 @@ function App() {
         let {selectedShelf, allShelvesNotSelected} = getShelfObjects(shelfName);
 
         if (selectedShelf.length !== 0) {
-            selectedShelf[0].books = selectedShelf[0].books.filter(b => book.title !== b.title);
+            selectedShelf[0].books = selectedShelf[0].books.filter(b => book.id !== b.id);
         }
 
         let finalShelvesList = allShelvesNotSelected.concat(selectedShelf);
@@ -112,6 +112,8 @@ function App() {
                moveFromShelfName} = shelfName;
         
         removeBookFromShelf(book, moveFromShelfName);
+
+        book.shelf = moveToShelfName;
         addBookToShelf(book, moveToShelfName);
     }
 
@@ -164,7 +166,8 @@ function App() {
             
             <Route exact path="/search" element={<SearchBooks _addBook={addBookToShelf}
                                                               _getCommonBooks={getCommonBooks}
-                                                              _shelves={shelves}/>}/>
+                                                              _shelves={shelves}
+                                                              _onMoveBookToShelf={moveBookToShelf}/>}/>
         </Routes>
     );
 }
