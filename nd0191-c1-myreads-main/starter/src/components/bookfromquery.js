@@ -35,7 +35,7 @@ function BookFromQuery({_book, _addBook}) {
                     ></div>
                     <div className="book-shelf-changer">
                         <select value={selectedShelf} onChange={handleSelectChange}>
-                            <option value={"none"} disabled>
+                            <option disabled>
                             Move to...
                             </option>
                             <option value="currentlyReading">
@@ -43,6 +43,7 @@ function BookFromQuery({_book, _addBook}) {
                             </option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>
+                            <option value="none">None</option>
                         </select>
                     </div>
                 </div>
