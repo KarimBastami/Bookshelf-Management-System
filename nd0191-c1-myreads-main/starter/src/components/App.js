@@ -117,22 +117,17 @@ function App() {
 
 
     const getCommonBooks = (searchBooks) => {
-        let commonBooks = [];
 
         const booksInShelves = shelves.map((shelf) => {
             return shelf.books;
         }).flat(1);
         
-        searchBooks.forEach((sbook) => {
-            booksInShelves.find((book) => {
-                if (sbook.id === book.id) {
-                    commonBooks.push(book);
-                    return true;
-                }
-                return false;      
+        const commonBooks = booksInShelves.filter((book) => {
+            return searchBooks.some((sBook) => {
+                return book.id === sBook.id;
             })
-        })
-        console.log(commonBooks);
+        }) 
+
         return commonBooks;
     }
 
