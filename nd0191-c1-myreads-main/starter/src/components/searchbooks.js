@@ -1,18 +1,19 @@
 import React from 'react';
+import debounce from 'lodash.debounce'
 
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import {useState, useEffect, useMemo} from 'react';
+import {Link} from 'react-router-dom';
 
 import * as BooksAPI from "../utils/BooksAPI";
 import BookFromQuery from './bookfromquery';
+
 
 function SearchBooks({_addBook}) {
 
     const [query, setQuery] = useState("");
     const [searchBooks, setSearchBooks] = useState([]);
 
-    const handleInputChange = e => setQuery(e.target.value);
-
+    const handleInputChange = useMemo(() => debounce(e => setQuery(e.target.value), 300), []);
 
     useEffect(() => {
 
@@ -43,7 +44,6 @@ function SearchBooks({_addBook}) {
                     <div className="search-books-input-wrapper">
                         <input type="text"
                                placeholder="Search by title, author, or ISBN"
-                               value={query}
                                onChange={handleInputChange}/>
                     </div>
                 </div>
