@@ -8,7 +8,7 @@ import * as BooksAPI from "../utils/BooksAPI";
 import BookFromQuery from './bookfromquery';
 
 
-function SearchBooks({_addBook}) {
+function SearchBooks({_addBook, _getCommonBooks}) {
 
     const [query, setQuery] = useState("");
     const [searchBooks, setSearchBooks] = useState([]);
@@ -20,7 +20,6 @@ function SearchBooks({_addBook}) {
         const searchForBooks = async () => {
             if (query) {
                 const response = await BooksAPI.search(query);
-                
                 if (response.length !== undefined) {
                     setSearchBooks(response);
                 } else {
@@ -36,6 +35,11 @@ function SearchBooks({_addBook}) {
 
     }, [query])
 
+
+    useEffect(() => {
+        _getCommonBooks(searchBooks);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchBooks])
 
     return (
             <div className="search-books">

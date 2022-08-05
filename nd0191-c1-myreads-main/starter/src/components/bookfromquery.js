@@ -8,6 +8,7 @@ function BookFromQuery({_book, _addBook}) {
     let bookURL = "";
 
     const [selectedShelf, setSelectedShelf] = useState(defaultShelf);
+    // const [isCommonInShelf, setIsCommonInShelf] = useState(false);
     
     const handleSelectChange = (e) => {
         const selectedValue = e.target.value;
@@ -63,7 +64,8 @@ function BookFromQuery({_book, _addBook}) {
 
 
 BookFromQuery.propTypes = {
-    _book: PropTypes.object.isRequired
+    _book: PropTypes.object.isRequired,
+    _addBook: PropTypes.func.isRequired
 }
 
 export default BookFromQuery

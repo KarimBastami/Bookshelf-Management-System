@@ -116,12 +116,32 @@ function App() {
     }
 
 
+    const getCommonBooks = (searchBooks) => {
+        let commonBooks = [];
+
+        const booksInShelves = shelves.map((shelf) => {
+            return shelf.books;
+        }).flat(1);
+        
+        searchBooks.forEach((sbook) => {
+            booksInShelves.find((book) => {
+                if (sbook.id === book.id) {
+                    commonBooks.push(book);
+                    return true;
+                }
+                return false;      
+            })
+        })
+        console.log(commonBooks);
+        return commonBooks;
+    }
+
+
     useEffect(() => {
         const getAllBooksInShelves = async () => {
             const response = await BooksAPI.getAll();
             handleGetBookResponse(response);
         }
-
         getAllBooksInShelves();
 
         //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,7 +166,8 @@ function App() {
                             </div>
                         } />
             
-            <Route exact path="/search" element={<SearchBooks _addBook={addBookToShelf}/>}/>
+            <Route exact path="/search" element={<SearchBooks _addBook={addBookToShelf}
+                                                              _getCommonBooks={getCommonBooks}/>}/>
         </Routes>
     );
 }
