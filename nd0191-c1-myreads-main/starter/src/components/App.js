@@ -1,11 +1,11 @@
 import "../css/App.css";
 
 import {useState, useEffect} from "react";
-import {Link, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 
-import * as BooksAPI from "../utils/BooksAPI";
-import Shelves from "./shelves"; 
+import * as BooksAPI from "../utils/BooksAPI"; 
 import SearchBooks from "./searchbooks";
+import Home from "./home";
 
 function App() {
 
@@ -148,21 +148,8 @@ function App() {
 
     return (
         <Routes>
-            <Route exact path="/" 
-                   element={
-                            <div className="app">
-                                <div className="list-books-title">
-                                    <h1>MyReads</h1>
-                                </div>
-
-                                <Shelves _shelfList={shelves}
-                                        _onMoveBookToShelf={moveBookToShelf}/>
-
-                                <Link to={"/search"} className="open-search">
-                                    <button></button>
-                                </Link>
-                            </div>
-                        } />
+            <Route exact path="/" element={<Home _shelfList={shelves}
+                                                 _onMoveBookToShelf={moveBookToShelf}/>} />
             
             <Route exact path="/search" element={<SearchBooks _addBook={addBookToShelf}
                                                               _getCommonBooks={getCommonBooks}

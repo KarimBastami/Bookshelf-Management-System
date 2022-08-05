@@ -83,7 +83,8 @@ function BookFromQuery({_book, _addBook, _commonBooks, _onMoveBookToShelf}) {
 BookFromQuery.propTypes = {
     _book: PropTypes.object.isRequired,
     _addBook: PropTypes.func.isRequired,
-    _commonBooks: PropTypes.array.isRequired
+    _commonBooks: PropTypes.array.isRequired,
+    _onMoveBookToShelf: PropTypes.func.isRequired
 }
 
 export default BookFromQuery

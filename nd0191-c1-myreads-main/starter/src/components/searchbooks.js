@@ -76,7 +76,8 @@ function SearchBooks({_addBook, _getCommonBooks, _shelves, _onMoveBookToShelf}) 
 SearchBooks.propTypes = {
     _addBook: PropTypes.func.isRequired,
     _getCommonBooks: PropTypes.func.isRequired,
-    _shelves: PropTypes.array.isRequired
+    _shelves: PropTypes.array.isRequired,
+    _onMoveBookToShelf: PropTypes.func.isRequired
 }
 
 export default SearchBooks;
