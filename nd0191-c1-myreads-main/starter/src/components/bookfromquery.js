@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
-function BookFromQuery({_book, _addBook}) {
+function BookFromQuery({_book, _addBook, _commonBooks}) {
 
-    let defaultShelf = "none";
     let bookURL = "";
 
-    const [selectedShelf, setSelectedShelf] = useState(defaultShelf);
-    // const [isCommonInShelf, setIsCommonInShelf] = useState(false);
+    const [selectedShelf, setSelectedShelf] = useState("none");
     
     const handleSelectChange = (e) => {
         const selectedValue = e.target.value;
+        _book.shelf = selectedValue;
 
         setSelectedShelf(selectedValue);
         _addBook(_book, selectedValue);
@@ -21,6 +20,18 @@ function BookFromQuery({_book, _addBook}) {
         bookURL = _book.imageLinks.thumbnail;
     }  
 
+
+    useEffect(() => {
+        const commonBook = _commonBooks.filter(book => _book.id === book.id);
+        const defaultShelf = (commonBook.length !== 0 && 
+                              commonBook[0] !== undefined) ? commonBook[0].shelf : "none";
+        
+        setSelectedShelf(defaultShelf);
+        
+    }, [_commonBooks, _book])
+
+
+    
     return (  
         <li>
             <div className="book">
@@ -65,7 +76,8 @@ function BookFromQuery({_book, _addBook}) {
 
 BookFromQuery.propTypes = {
     _book: PropTypes.object.isRequired,
-    _addBook: PropTypes.func.isRequired
+    _addBook: PropTypes.func.isRequired,
+    _commonBooks: PropTypes.array.isRequired
 }
 
 export default BookFromQuery

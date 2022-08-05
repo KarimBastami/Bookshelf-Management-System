@@ -137,6 +137,7 @@ function App() {
             const response = await BooksAPI.getAll();
             handleGetBookResponse(response);
         }
+
         getAllBooksInShelves();
 
         //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -162,7 +163,8 @@ function App() {
                         } />
             
             <Route exact path="/search" element={<SearchBooks _addBook={addBookToShelf}
-                                                              _getCommonBooks={getCommonBooks}/>}/>
+                                                              _getCommonBooks={getCommonBooks}
+                                                              _shelves={shelves}/>}/>
         </Routes>
     );
 }

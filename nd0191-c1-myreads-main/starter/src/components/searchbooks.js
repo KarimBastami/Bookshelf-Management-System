@@ -1,5 +1,6 @@
 import React from 'react';
 import debounce from 'lodash.debounce'
+import PropTypes from "prop-types";
 
 import {useState, useEffect, useMemo} from 'react';
 import {Link} from 'react-router-dom';
@@ -8,10 +9,11 @@ import * as BooksAPI from "../utils/BooksAPI";
 import BookFromQuery from './bookfromquery';
 
 
-function SearchBooks({_addBook, _getCommonBooks}) {
+function SearchBooks({_addBook, _getCommonBooks, _shelves}) {
 
     const [query, setQuery] = useState("");
     const [searchBooks, setSearchBooks] = useState([]);
+    const [commonBooks, setCommonBooks] = useState([]);
 
     const handleInputChange = useMemo(() => debounce(e => setQuery(e.target.value), 300), []);
 
@@ -20,6 +22,7 @@ function SearchBooks({_addBook, _getCommonBooks}) {
         const searchForBooks = async () => {
             if (query) {
                 const response = await BooksAPI.search(query);
+
                 if (response.length !== undefined) {
                     setSearchBooks(response);
                 } else {
@@ -37,9 +40,12 @@ function SearchBooks({_addBook, _getCommonBooks}) {
 
 
     useEffect(() => {
-        _getCommonBooks(searchBooks);
+        const commonBooks = _getCommonBooks(searchBooks);
+        setCommonBooks(commonBooks);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchBooks])
+    }, [searchBooks, _shelves])
+
 
     return (
             <div className="search-books">
@@ -56,12 +62,19 @@ function SearchBooks({_addBook, _getCommonBooks}) {
                         {searchBooks.map((book) => {
                             return <BookFromQuery key={book.id} 
                                                   _book={book}
-                                                  _addBook={_addBook}/>
+                                                  _addBook={_addBook}
+                                                  _commonBooks={commonBooks}/>
                         })}
                     </ol>
                 </div>
             </div>
     )
+}
+
+
+SearchBooks.propTypes = {
+    _addBook: PropTypes.func.isRequired,
+    _getCommonBooks: PropTypes.func.isRequired
 }
 
 export default SearchBooks;
