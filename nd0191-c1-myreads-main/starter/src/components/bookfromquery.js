@@ -5,37 +5,16 @@ import {useState} from "react";
 function BookFromQuery({_book, _addBook}) {
 
     let defaultShelf = "none";
+    let bookURL = "";
 
     const [selectedShelf, setSelectedShelf] = useState(defaultShelf);
     
     const handleSelectChange = (e) => {
-        let uiMoveToShelfName = "";
         const selectedValue = e.target.value;
+
         setSelectedShelf(selectedValue);
-        
-
-        switch (selectedValue) {
-            case "currentlyReading":
-                uiMoveToShelfName = "Currently Reading";
-                break;
-            
-            case "wantToRead":
-                uiMoveToShelfName = "Want to Read";
-                break;
-
-            case "read":
-                uiMoveToShelfName = "Read";
-                break;
-            
-            default:
-                uiMoveToShelfName = "none";
-                break;
-        }
-
-        _addBook(_book, uiMoveToShelfName);
+        _addBook(_book, selectedValue);
     }
-
-    let bookURL = "";
 
     if (_book.hasOwnProperty("imageLinks")) {
         bookURL = _book.imageLinks.thumbnail;

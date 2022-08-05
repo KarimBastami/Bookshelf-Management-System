@@ -63,6 +63,7 @@ function App() {
         finalShelvesList = fitShelvesOrder(finalShelvesList);
 
         setShelves(finalShelvesList);
+        BooksAPI.update({id: book.id}, shelfName);
     }
 
 
@@ -112,8 +113,6 @@ function App() {
         
         removeBookFromShelf(book, moveFromShelfName);
         addBookToShelf(book, moveToShelfName);
-
-        BooksAPI.update({id: book.id}, moveToShelfName);
     }
 
 

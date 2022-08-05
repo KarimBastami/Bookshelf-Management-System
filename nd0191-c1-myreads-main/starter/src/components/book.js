@@ -4,6 +4,7 @@ import {useState} from "react"
 function Book({_book, _shelfName, _onMoveBookToShelf}) {
 
     let defaultShelf = "";
+    let bookURL = "";
 
     switch (_shelfName) {
         case "Currently Reading":
@@ -23,8 +24,8 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
             break;
     }
 
+    
     const [selectedShelf, setSelectedShelf] = useState(defaultShelf);
-
 
     const handleSelectChange = (e) => {
 
@@ -40,8 +41,6 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
         _onMoveBookToShelf(_book, shelfNames);
     }
 
-
-    let bookURL = "";
 
     if (_book.hasOwnProperty("imageLinks")) {
         bookURL = _book.imageLinks.thumbnail;
@@ -77,8 +76,10 @@ function Book({_book, _shelfName, _onMoveBookToShelf}) {
 
                 <div className="book-title">{_book.bookName}</div>
                 <div className="book-authors">
-                    {_book.authors.map((author) => {
-                        return <div key={author} >{author}</div> 
+                    {
+                        _book.hasOwnProperty("authors") &&
+                        _book.authors.map((author) => {
+                            return <div key={author} >{author}</div> 
                     })}
                 </div>
             </div>
