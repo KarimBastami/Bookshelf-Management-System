@@ -1,4 +1,4 @@
-# MyReads
+# MyReads - Bookshelf Management System
   This project was part of my graduation requirements for Udacity's React Course. This application is basically a book shelf management system. You are first presented
   with a main page with 3 bookshelves (Currently Reading, Want To Read, Read). Each bookshelf will by default contain the books stored in the online server setup for this
   course. There will also be a navigation button giving you access to a search page. Books you search for will be displayed and can be added + moved through the shelves in 
