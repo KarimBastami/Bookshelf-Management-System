@@ -8,6 +8,9 @@
   - There is a navigation button giving you access to a search page. Books you search for will be displayed and can be added + moved through the shelves in the main page 
   - Any changes in the local application state will also being updated on the server to maintain the same bookshelf even after refreshing the page
 
+## Try It Without Downloading
+[kb-myreads.netlify.app](https://kb-myreads.netlify.app)
+
 ## How To Run
 - Make sure Nodejs and NPM are installed on your device
 - Open your terminal
